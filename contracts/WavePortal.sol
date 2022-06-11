@@ -5,8 +5,8 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
 contract WavePortal {
-    
     uint256 totalWaves;
+    address[] wavers;
 
     constructor() {
         console.log("Contrato inteligente criado :)");
@@ -14,11 +14,15 @@ contract WavePortal {
 
     function wave() public {
         totalWaves += 1;
+        wavers.push(msg.sender);
         console.log("%s deu tchauzinho!", msg.sender);
     }
 
     function getTotalWaves() public view returns (uint256) {
         console.log("Temos um total de %d tchauzinhos!", totalWaves);
+        for (uint256 i = 0; i < wavers.length; i++) {
+            console.log(i + 1, "-", wavers[i]);
+        }
         return totalWaves;
     }
 }
