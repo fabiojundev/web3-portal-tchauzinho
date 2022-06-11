@@ -25,4 +25,8 @@ contract WavePortal {
         }
         return totalWaves;
     }
+
+    function getWavers() public view returns (address[] memory) {
+        return wavers;
+    }
 }
