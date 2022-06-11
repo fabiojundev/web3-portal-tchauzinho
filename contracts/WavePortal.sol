@@ -19,9 +19,9 @@ contract WavePortal {
     }
 
     function getTotalWaves() public view returns (uint256) {
-        console.log("Temos um total de %d tchauzinhos!", totalWaves);
+        console.log("Temos um total de %d tchauzinhos:", totalWaves);
         for (uint256 i = 0; i < wavers.length; i++) {
-            console.log(i + 1, "-", wavers[i]);
+            console.log("#%d - %s", i + 1, wavers[i]);
         }
         return totalWaves;
     }
