@@ -6,27 +6,39 @@ import "hardhat/console.sol";
 
 contract WavePortal {
     uint256 totalWaves;
-    address[] wavers;
+
+    event NewWave(address indexed from, uint256 timestamp, string message);
+
+    struct Wave {
+        address waver; // Endereço do usuário que deu tchauzinho
+        string message; // Mensagem que o usuário envio
+        uint256 timestamp; // Data/hora de quando o usuário tchauzinhou.
+    }
+
+    Wave[] waves;
 
     constructor() {
         console.log("Contrato inteligente criado :)");
     }
 
-    function wave() public {
+    function wave(string memory _message) public {
         totalWaves += 1;
-        wavers.push(msg.sender);
-        console.log("%s deu tchauzinho!", msg.sender);
+        console.log("%s tchauzinhou com a mensagem %s", msg.sender, _message);
+
+        /*
+         * Aqui é onde eu efetivamenet armazeno o tchauzinho no array.
+         */
+        waves.push(Wave(msg.sender, _message, block.timestamp));
+
+        emit NewWave(msg.sender, block.timestamp, _message);
+    }
+
+    function getAllWaves() public view returns (Wave[] memory) {
+        return waves;
     }
 
     function getTotalWaves() public view returns (uint256) {
         console.log("Temos um total de %d tchauzinhos:", totalWaves);
-        for (uint256 i = 0; i < wavers.length; i++) {
-            console.log("#%d - %s", i + 1, wavers[i]);
-        }
         return totalWaves;
-    }
-
-    function getWavers() public view returns (address[] memory) {
-        return wavers;
     }
 }
